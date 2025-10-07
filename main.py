@@ -74,7 +74,9 @@ def draw_initials_on_qr(img: Image.Image, initials: str) -> Image.Image:
         font = ImageFont.load_default()
 
     text = initials.strip().upper()
-    tw, th = draw.textsize(text, font=font)
+    bbox = draw.textbbox((0, 0), text, font=font)
+    tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+
     text_xy = (cx - tw // 2, cy - th // 2 - 1)  # vertically center tweak
 
     draw.text(text_xy, text, fill=(0, 0, 0, 255), font=font)
